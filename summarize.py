@@ -49,3 +49,4 @@ df["Summarized_Text"] = df["Combined_Text"].apply(lambda x: summarize_text(x, ma
 df.to_excel("summarized_output_adn.xlsx", index=False)
 
 print("Summarization completed and saved to summarized_output.csv")
+
