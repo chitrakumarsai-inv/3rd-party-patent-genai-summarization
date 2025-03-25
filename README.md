@@ -57,8 +57,8 @@ The script uses environment variables for configuration. Ensure your `.env` file
 
 ## Output
 
-- **Input File**: Reads from `./data/raw_data/Intermediates ADN Alert - NLP-ML Experiment Feed_2025-03-23.xlsx`.
-- **Output File**: Saves the summarized data to `summarized_output_adn.xlsx`.
+- **Input File**: Reads from `./data/raw_data/file_name.xlsx`.
+- **Output File**: Saves the summarized data to `summarized_output_file_name.xlsx`.
 - **Content**: The output file contains the original data with an additional column `Summarized_Text` for the summarized content.
 
 ---
