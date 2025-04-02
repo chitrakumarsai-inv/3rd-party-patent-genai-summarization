@@ -24,7 +24,7 @@ def summarize_text(text, max_tokens=300):
         model=deployment_name,
         messages=[
             {"role": "system", "content": "You are an AI that summarizes text concisely. Do not introduce new information or assumptions."},
-            {"role": "user", "content": f"Summarize the following combined patent information while keeping all key points:\n{text}"}
+            {"role": "user", "content": f"Summarize the following combined patent information while keeping all key points and simplify the result or highlight key features while still reliably maintaining the quality and accuracy:\n{text}"}
         ],
         max_tokens=max_tokens,
         temperature=0,   # Reduces hallucination
@@ -34,19 +34,19 @@ def summarize_text(text, max_tokens=300):
     return response.choices[0].message.content.strip()
 
 # Load dataset
-df = pd.read_excel("./data/raw_data/Intermediates ADN Alert - NLP-ML Experiment Feed_2025-03-23.xlsx", engine="openpyxl", skiprows=1)  # Change to your actual file
+df = pd.read_excel("./data/raw_data/Nylon Polymer Domain ML Feeds_032725_readable.xlsx", engine="openpyxl", skiprows=0)  # Change to your actual file
 
 # Summarize each column while keeping ID unchanged
 # Combine Title, Abstract, and Claims
-df["Combined_Text"] = df.apply(lambda row: f"Title: {row['Title (English)']}\nAbstract: {row['Abstract (English)']}\nClaims: {row['Claims (English)']}\nFirstClaims: {row['First Claim (English)']}", axis=1)
+df["Combined_Text"] = df.apply(lambda row: f"Title: {row['DWPI Title']}\nAbstract: {row['Abstract']}\nClaims: {row['All Claims']}\nFirstClaims: {row['First Claim']}", axis=1)
 # Summarize combined text
 df["Summarized_Text"] = df["Combined_Text"].apply(lambda x: summarize_text(x, max_tokens=300))
 
 # # Keep only necessary columns
-# df_summarized = df[["ID", "Summarized_Title", "Summarized_Abstract", "Summarized_Claims", "Target"]]
+df_summarized = df[["Publication Number", "Summarized_Text", "DWPI Title", "Abstract", "All Claims", 'First Claim']]
 
 # Save the summarized dataset
-df.to_excel("summarized_output_adn.xlsx", index=False)
+df_summarized.to_excel("summarized_output_recycling.xlsx", index=False)
 
 print("Summarization completed and saved to summarized_output.csv")
 
